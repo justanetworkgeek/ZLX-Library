@@ -4,7 +4,7 @@
 #include <debug.h>
 #include <libfat/fat.h>
 #include <libext2/ext2.h>
-#include <libntfs/ntfs.h>
+//#include <libntfs/ntfs.h>
 #include <libxtaf/xtaf.h>
 #include <iso9660/iso9660.h>
 #include <sys/iosupport.h>
@@ -62,26 +62,26 @@ static void AddPartition(sec_t sector, int device, int type, int *devnum) {
 			fatGetVolumeLabel(mount, part[device][*devnum].name);
 			break;
 		case T_NTFS:
-			if (!ntfsMount(mount, disc, sector, 2, 64, NTFS_DEFAULT | NTFS_RECOVER))
-				return;
+			//if (!ntfsMount(mount, disc, sector, 2, 64, NTFS_DEFAULT | NTFS_RECOVER))
+			//	return;
 
-			name = (char *) ntfsGetVolumeName(mount);
+			//name = (char *) ntfsGetVolumeName(mount);
 
-			if (name && name[0])
-				strcpy(part[device][*devnum].name, name);
-			else
-				part[device][*devnum].name[0] = 0;
+			//if (name && name[0])
+			//	strcpy(part[device][*devnum].name, name);
+			//else
+			//	part[device][*devnum].name[0] = 0;
 			break;
 		case T_EXT2:
-			if (!ext2Mount(mount, disc, sector, 2, 128, EXT2_FLAG_DEFAULT))
-				return;
+			//if (!ext2Mount(mount, disc, sector, 2, 128, EXT2_FLAG_DEFAULT))
+			//	return;
 
-			name = (char *) ext2GetVolumeName(mount);
+			//name = (char *) ext2GetVolumeName(mount);
 
-			if (name && name[0])
-				strcpy(part[device][*devnum].name, name);
-			else
-				part[device][*devnum].name[0] = 0;
+			//if (name && name[0])
+			//	strcpy(part[device][*devnum].name, name);
+			//else
+			//	part[device][*devnum].name[0] = 0;
 			break;
 		case T_ISO9660:
 			if (!ISO9660_Mount(mount, disc))
@@ -341,7 +341,7 @@ static void UnmountPartitions(int device) {
 				break;
 			case T_NTFS:
 				part[device][i].type = 0;
-				ntfsUnmount(part[device][i].mount, false);
+				//ntfsUnmount(part[device][i].mount, false);
 				break;
 			case T_EXT2:
 				part[device][i].type = 0;

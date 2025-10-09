@@ -37,13 +37,6 @@ int main(int argc, char **argv) {
     }
     {
         lpBrowserActionEntry action = new BrowserActionEntry();
-        action->name = "Boot tftp";
-        action->action = ActionBootTFTP;
-        action->param = NULL;
-        App.AddAction(action);
-    }
-    {
-        lpBrowserActionEntry action = new BrowserActionEntry();
         action->name = "Dump nand";
         action->action = ActionDumpNand;
         action->param = NULL;

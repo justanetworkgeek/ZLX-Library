@@ -33,7 +33,7 @@ LDFLAGS	=	-g $(MACHDEP) -Wl,-Map,$(notdir $@).map
 #---------------------------------------------------------------------------------
 # any extra libraries we wish to link with the project
 #---------------------------------------------------------------------------------
-LIBS	:=	-lxenon -lm  -lxtaf -lfat -lpng -lz
+LIBS	:=	-lxenon -lm -lfat -lpng -lz -lxtaf -lext2fs
 
 #---------------------------------------------------------------------------------
 # list of directories containing libraries, this must be the top level containing
@@ -104,7 +104,9 @@ $(BUILD):
 #---------------------------------------------------------------------------------
 clean:
 	@echo clean ...
-	@rm -fr $(BUILD) $(OUTPUT).elf $(OUTPUT).elf32
+	@rm -fr $(BUILD) $(OUTPUT).elf $(OUTPUT).elf32 $(TFTPROOT)/$(OUTPUT).elf32
+	@rm -fr $(BUILD) $(OUTPUT).elf $(OUTPUT).elf32 $(TFTPROOT)/$(OUTPUT).elf32
+	$(TFTPROOT)/listfiles.sh
 
 #---------------------------------------------------------------------------------
 else
@@ -138,13 +140,11 @@ endif
 #---------------------------------------------------------------------------------
 
 z:$(BUILD) $(OUTPUT).elf32
-	cp $(OUTPUT).elf32 /var/lib/tftpboot/tftpboot/xenon
-	$(PREFIX)strip /var/lib/tftpboot/tftpboot/xenon
+	cp $(OUTPUT).elf32 $(TFTPROOT)/xenon
 	$(PREFIX)strip $(OUTPUT).elf32
 	gzip -n9 -f $(OUTPUT).elf32 -S.z
 
 run: $(BUILD) $(OUTPUT).elf32
-	cp $(OUTPUT).elf32 /var/lib/tftpboot/tftpboot/xenon
-	$(PREFIX)strip /var/lib/tftpboot/tftpboot/xenon
+	cp $(OUTPUT).elf32 $(TFTPROOT)/xenon
 	$(PREFIX)strip $(OUTPUT).elf32
 	gzip -n9 -f $(OUTPUT).elf32 -S.gz

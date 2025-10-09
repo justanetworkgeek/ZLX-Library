@@ -7,6 +7,10 @@
 #include <xenos/xenos.h>
 
 #include <diskio/ata.h>
+
+#include <console/telnet_console.h>
+#include <console/console.h>
+
 extern "C" {
 #include <input/input.h>
 #include <xenon_nand/xenon_sfcx.h>
@@ -264,7 +268,7 @@ namespace ZLX {
                 color &= BlurColor;
             }
 
-            //printf("%s - %d\r\n", vEntry.at(k).name.c_str(), vEntry.at(k).type);
+            printf("%s - %d\r\n", vEntry.at(k).name.c_str(), vEntry.at(k).type);
 
 
             if (vEntry.at(k).type == 1) {
@@ -458,8 +462,7 @@ namespace ZLX {
     void Browser::ScanDir() {
         entrySelected = 0;
 
-
-        //printf("\r\n\r\nScanDir : %s\r\n\r\n\r\n", currentPath);
+        printf("\r\n\r\nScanDir : %s\r\n\r\n\r\n", currentPath);
         DIR * rep = opendir(currentPath);
         vEntry.clear();
 
@@ -470,7 +473,7 @@ namespace ZLX {
                 // never display hidden files
                 if (ent->d_name[0] == '.')
                     continue;
-                //printf("%s\r\n", ent->d_name);
+                printf("%s\r\n", ent->d_name);
                 FileEntry currentEntry;
                 currentEntry.name = ent->d_name;
                 currentEntry.type = (ent->d_type == DIR_TYPE) ? 1 : 0;
@@ -630,7 +633,6 @@ namespace ZLX {
             CLAMP(entrySelected, 0, vEntry.size() - 1);
             CLAMP(actionSelected, 0, nbAction - 1);
             CLAMP(panelSelected, 0, 1);
-
 
             // Save the old value
             old_ctrl = ctrl;

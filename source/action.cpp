@@ -43,13 +43,7 @@ extern "C" {
 #include "menu.h"
 
 
-//#define XELL_2S
-
-void ActionBootTFTP(void * unused) {
-    // boot TFTP
-    network_init();
-    int d = boot_tftp_url("192.168.1.98:/tftpboot/xenon");
-}
+#define XELL_2S
 
 void ActionShutdown(void * unused) {
     xenon_smc_power_shutdown();

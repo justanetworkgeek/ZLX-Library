@@ -46,7 +46,7 @@ extern "C" {
 extern "C" {
     void httpd_start();
 }
-//#define XELL_2S
+//#define XELL_2S // Build a stage 2 gzip, comment to disable.
 
 void ActionStartHttpd(void * unused) {
     httpd_start();
@@ -57,7 +57,7 @@ void ActionReturnToXell(void * unused) {
 }
 
 void ActionBootTFTP(void * unused) {
-    int d = boot_tftp_url("192.168.1.98:/tftpboot/xenon");
+    int d = boot_tftp_url("192.168.1.254:/tftpboot/xenon");
 }
 
 void ActionShutdown(void * unused) {

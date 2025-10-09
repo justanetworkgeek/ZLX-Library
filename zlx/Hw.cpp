@@ -18,6 +18,7 @@ extern "C" {
 #include <time/time.h>
 }
 #include <console/console.h>
+#include <console/telnet_console.h>
 #include <diskio/disc_io.h>
 #include <usb/usbmain.h>
 #include <time/time.h>
@@ -47,7 +48,9 @@ namespace ZLX
                 usb_do_poll();
             }
             if(flags & INIT_NETWORK){
+                console_init();
                 network_init();
+                telnet_console_init();
             }
             
             if(flags & INIT_ATA){

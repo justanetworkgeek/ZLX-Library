@@ -61,6 +61,7 @@ static void AddPartition(sec_t sector, int device, int type, int *devnum) {
 				return;
 			fatGetVolumeLabel(mount, part[device][*devnum].name);
 			break;
+		/*
 		case T_NTFS:
 			//if (!ntfsMount(mount, disc, sector, 2, 64, NTFS_DEFAULT | NTFS_RECOVER))
 			//	return;
@@ -83,6 +84,7 @@ static void AddPartition(sec_t sector, int device, int type, int *devnum) {
 			//else
 			//	part[device][*devnum].name[0] = 0;
 			break;
+		*/
 		case T_ISO9660:
 			if (!ISO9660_Mount(mount, disc))
 				return;

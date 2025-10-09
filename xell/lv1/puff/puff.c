@@ -123,7 +123,7 @@ local int bits(struct state *s, int need)
     /* load at least need bits into val */
     val = s->bitbuf;
     while (s->bitcnt < need) {
-        //if (s->incnt == s->inlen) longjmp(s->env, 1);   /* out of input */
+        if (s->incnt == s->inlen) longjmp(s->env, 1);   /* out of input */
         val |= (long)(s->in[s->incnt++]) << s->bitcnt;  /* load eight bits */
         s->bitcnt += 8;
     }
@@ -284,7 +284,7 @@ local int decode(struct state *s, struct huffman *h)
         }
         left = (MAXBITS+1) - len;
         if (left == 0) break;
-        //if (s->incnt == s->inlen) longjmp(s->env, 1);   /* out of input */
+        if (s->incnt == s->inlen) longjmp(s->env, 1);   /* out of input */
         bitbuf = s->in[s->incnt++];
         if (left > 8) left = 8;
     }
@@ -786,12 +786,11 @@ int puff(unsigned char *dest,           /* pointer to destination pointer */
     s.incnt = 0;
     s.bitbuf = 0;
     s.bitcnt = 0;
-#if 0
+
     /* return if bits() or decode() tries to read past available input */
     if (setjmp(s.env) != 0)             /* if came back here via longjmp() */
         err = 2;                        /* then skip do-loop, return error */
-#endif
-     {
+    else {
         /* process blocks until last block or error */
         do {
             last = bits(&s, 1);         /* one if last block */
@@ -897,29 +896,29 @@ int main(int argc, char **argv)
             else if (arg[1] >= '0' && arg[1] <= '9')
                 skip = (unsigned)atoi(arg + 1);
             else {
-                fprintf(stderr, "invalid option %s\n", arg);
+                f//printf(stderr, "invalid option %s\n", arg);
                 return 3;
             }
         }
         else if (name != NULL) {
-            fprintf(stderr, "only one file name allowed\n");
+            f//printf(stderr, "only one file name allowed\n");
             return 3;
         }
         else
             name = arg;
     source = load(name, &len);
     if (source == NULL) {
-        fprintf(stderr, "memory allocation failure\n");
+        f//printf(stderr, "memory allocation failure\n");
         return 4;
     }
     if (len == 0) {
-        fprintf(stderr, "could not read %s, or it was empty\n",
+        f//printf(stderr, "could not read %s, or it was empty\n",
                 name == NULL ? "<stdin>" : name);
         free(source);
         return 3;
     }
     if (skip >= len) {
-        fprintf(stderr, "skip request of %d leaves no input\n", skip);
+        f//printf(stderr, "skip request of %d leaves no input\n", skip);
         free(source);
         return 3;
     }
@@ -929,10 +928,10 @@ int main(int argc, char **argv)
     sourcelen = (unsigned long)len;
     ret = puff(NIL, &destlen, source + skip, &sourcelen);
     if (ret)
-        fprintf(stderr, "puff() failed with return code %d\n", ret);
+        f//printf(stderr, "puff() failed with return code %d\n", ret);
     else {
-        fprintf(stderr, "puff() succeeded uncompressing %lu bytes\n", destlen);
-        if (sourcelen < len) fprintf(stderr, "%lu compressed bytes unused\n",
+        f//printf(stderr, "puff() succeeded uncompressing %lu bytes\n", destlen);
+        if (sourcelen < len) f//printf(stderr, "%lu compressed bytes unused\n",
                                      len - sourcelen);
     }
 
@@ -940,7 +939,7 @@ int main(int argc, char **argv)
     if (put) {
         dest = malloc(destlen);
         if (dest == NULL) {
-            fprintf(stderr, "memory allocation failure\n");
+            f//printf(stderr, "memory allocation failure\n");
             free(source);
             return 4;
         }

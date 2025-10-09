@@ -68,7 +68,7 @@ void append_dir_to_path(char * path,char * dir){
   }
 }
 
-void ActionBootTFTP(void * unused){
+void ActionListTFTP(void * unused){
 	// boot TFTP
 	printf("boot tftp\r\n");
 }
@@ -459,7 +459,7 @@ private:
 		{
 			// TFTP
 			action.name = "Boot TFTP";
-			action.action = ActionBootTFTP;
+			action.action = ActionListTFTP;
 			action.param = NULL;
 			vAction.push_back(action);
 		}

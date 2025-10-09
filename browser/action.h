@@ -1,4 +1,4 @@
-void ActionBootTFTP(void * unused);
+void ActionListTFTP(void * unused);
 void ActionShutdown(void * unused);
 void ActionRestart(void * unused);
 void ActionDumpNand(void * unused);

@@ -547,7 +547,7 @@ void MyConsole::InitActionEntry() {
         // TFTP
         ActionEntry * action = new ActionEntry();
         action->name = "Boot TFTP";
-        action->action = ActionBootTFTP;
+        action->action = ActionListTFTP;
         action->param = NULL;
         AddAction(action);
     }
